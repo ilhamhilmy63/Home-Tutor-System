@@ -1,0 +1,66 @@
+/* Header Styles */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: #2196F3;
+    color: white;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Table Styles */
+.tutor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.tutor-table th, .tutor-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tutor-table th {
+    background-color: #f5f5f5;
+}
+
+/* Warning Box */
+.warning-box {
+    border: 2px solid #ff9800;
+    border-radius: 5px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background-color: #fff3e0;
+}
+
+/* CTA Buttons */
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.features {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
