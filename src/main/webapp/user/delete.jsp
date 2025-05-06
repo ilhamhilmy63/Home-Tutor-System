@@ -1,30 +1,36 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Delete Account</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-</head>
-<body>
-<jsp:include page="../includes/header.jsp"/>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="../common.jsp" %>
+<%@page import="UserManage.User" %>
 
-<div class="container">
-    <h2>Account Deletion</h2>
+<%
+    User user = (User) session.getAttribute("user");
+    if(user == null) {
+        response.sendRedirect(request.getContextPath() + "/auth/login.jsp");
+        return;
+    }
+%>
 
-    <% if(request.getParameter("error") != null) { %>
-    <div class="alert error"><%= request.getParameter("error") %></div>
-    <% } %>
+<c:set var="content" value="user/delete-content.jsp" />
+<c:set var="title" value="Delete Account" />
 
-    <div class="warning-box">
-        <h3>⚠️ Warning!</h3>
-        <p>This action will permanently delete your account and all associated data.</p>
-        <p>Are you sure you want to proceed?</p>
+<jsp:include page="../template.jsp" />
+<div class="delete-container">
+    <div class="delete-card">
+        <div class="delete-header">
+            <h2>Delete Account</h2>
+            <p>This action cannot be undone</p>
+        </div>
 
-        <form action="delete-account" method="post">
-            <button type="submit" class="btn danger">Confirm Deletion</button>
-            <a href="dashboard.jsp" class="btn">Cancel</a>
+        <form action="${pageContext.request.contextPath}/delete-account" method="POST">
+            <div class="form-group">
+                <label for="password">Enter your password to confirm</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-actions">
+                <a href="dashboard.jsp" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </div>
         </form>
     </div>
 </div>
-</body>
-</html>

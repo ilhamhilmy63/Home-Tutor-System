@@ -8,9 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import jakarta.servlet.http.HttpSession;
-
+import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -21,14 +20,14 @@ public class LoginServlet extends HttpServlet {
 
         User user = UserManagement.getUserByEmail(email);
 
-        if(user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
-            if(user instanceof Admin) {
-                response.sendRedirect("admin/dashboard.jsp");
+            if (user instanceof Admin) {
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard.jsp");
             } else {
-                response.sendRedirect("user/dashboard.jsp");
+                response.sendRedirect(request.getContextPath() + "/user/dashboard.jsp");
             }
         } else {
             request.setAttribute("error", "Invalid credentials");
