@@ -1,135 +1,274 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login | Home Tutor System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HomeTutor.lk</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #4a7dff;
+            --secondary-color: #764ba2;
+            --text-color: #333;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+        }
+
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
             display: flex;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
-        .login-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
-        .login-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
-        .login-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
+
+        .logo {
             text-align: center;
+            margin-bottom: 2rem;
         }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .logo p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
         .form-control:focus {
-            border-color: #764ba2;
-            box-shadow: 0 0 0 0.25rem rgba(118, 75, 162, 0.25);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 125, 255, 0.2);
+            outline: none;
         }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: #999;
+        }
+
         .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
             width: 100%;
             padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s;
         }
+
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(74, 125, 255, 0.3);
         }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me input {
+            margin-right: 10px;
+        }
+
         .forgot-password {
-            color: #764ba2;
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        .forgot-password a {
+            color: #666;
             text-decoration: none;
-            transition: all 0.3s;
+            font-size: 0.875rem;
         }
-        .forgot-password:hover {
-            text-decoration: underline;
+
+        .forgot-password a:hover {
+            color: var(--primary-color);
         }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
         .error-message {
             color: #dc3545;
-            font-size: 0.875em;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 576px) {
+            .login-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="login-card animate__animated animate__fadeIn">
-                <div class="login-header">
-                    <h3>Welcome Back</h3>
-                    <p>Please login to your account</p>
-                </div>
-                <div class="card-body p-4">
-                    <% if (request.getParameter("error") != null) { %>
-                    <div class="alert alert-danger animate__animated animate__shakeX">
-                        <%= request.getParameter("error") %>
-                    </div>
-                    <% } %>
-                    <% if (request.getParameter("success") != null) { %>
-                    <div class="alert alert-success animate__animated animate__fadeIn">
-                        <%= request.getParameter("success") %>
-                    </div>
-                    <% } %>
-                    <form action="${pageContext.request.contextPath}/login" method="post" id="loginForm">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                            <div class="error-message" id="emailError"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                            <div class="error-message" id="passwordError"></div>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember">
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
-                        <button type="submit" class="btn btn-login btn-primary mb-3">Login</button>
-                        <div class="text-center">
-                            <a href="${pageContext.request.contextPath}/auth/forgot-password.jsp" class="forgot-password">Forgot Password?</a>
-                        </div>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p>Don't have an account? <a href="${pageContext.request.contextPath}/auth/register.jsp" style="color: #764ba2;">Register here</a></p>
-                    </div>
-                </div>
-            </div>
+<div class="login-container">
+    <div class="logo">
+        <h1>Home<span>Tutor</span>.lk</h1>
+        <p>Find the perfect tutor for your needs</p>
+    </div>
+
+    <c:if test="${not empty param.error}">
+        <div class="alert alert-danger">${param.error}</div>
+    </c:if>
+
+    <c:if test="${not empty param.success}">
+        <div class="alert alert-success">${param.success}</div>
+    </c:if>
+
+    <form action="${pageContext.request.contextPath}/user/HomePage.jsp" method="post" id="loginForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="error-message" id="emailError"></div>
         </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            <div class="error-message" id="passwordError"></div>
+        </div>
+
+        <div class="forgot-password">
+            <a href="${pageContext.request.contextPath}/auth/forgot-password.jsp">Forgot Password?</a>
+        </div>
+
+        <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+        </div>
+
+        <button type="submit" class="btn-login">Login</button>
+    </form>
+
+    <div class="signup-link">
+        Don't have an account? <a href="${pageContext.request.contextPath}/auth/register.jsp">Sign Up</a>
+    </div>
+
+    <div class="nav-links">
+        <a href="${pageContext.request.contextPath}/user/HomePage.jsp">Home</a>
+        <a href="${pageContext.request.contextPath}/blog">Blog</a>
+        <a href="${pageContext.request.contextPath}/tutors">Find Tutors</a>
+        <a href="${pageContext.request.contextPath}/user/AboutUs.jsp">About Us</a>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Password toggle functionality
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const password = document.getElementById('password');
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Form validation
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         let isValid = true;
 
-        // Validate email
+        // Reset errors
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+        // Email validation
         const email = document.getElementById('email').value.trim();
-        const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if (!emailRegex.test(email)) {
+        if (!email) {
+            document.getElementById('emailError').textContent = 'Email is required';
+            isValid = false;
+        } else if (!/^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email)) {
             document.getElementById('emailError').textContent = 'Invalid email format';
             isValid = false;
-        } else {
-            document.getElementById('emailError').textContent = '';
         }
 
-        // Validate password
+        // Password validation
         const password = document.getElementById('password').value;
-        if (password.length < 1) {
+        if (!password) {
             document.getElementById('passwordError').textContent = 'Password is required';
             isValid = false;
-        } else {
-            document.getElementById('passwordError').textContent = '';
         }
 
         if (!isValid) {
