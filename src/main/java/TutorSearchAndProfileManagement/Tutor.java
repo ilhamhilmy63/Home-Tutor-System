@@ -2,7 +2,7 @@ package TutorSearchAndProfileManagement;
 
 import java.util.Map;
 
-class Tutor extends User {
+public class Tutor extends User {
     private String subject;
     private String location;
     private Map<String, String> availability; // e.g., { "Monday": "2–4 PM" }
