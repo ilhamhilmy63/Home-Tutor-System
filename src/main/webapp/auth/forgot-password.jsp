@@ -75,7 +75,7 @@
                         </div>
                         <button type="submit" class="btn btn-reset btn-primary mb-3">Reset Password</button>
                         <div class="text-center">
-                            <a href="auth/login.jsp" style="color: #764ba2;">Back to Login</a>
+                            <a href="/auth/login.jsp" style="color: #764ba2;">Back to Login</a>
                         </div>
                     </form>
                 </div>
