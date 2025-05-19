@@ -314,7 +314,7 @@
     <a href="index.jsp" class="logo">HomeTutor.lk</a>
     <div class="nav-links">
         <a href="dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="#"><i class="fas fa-search"></i> Find Tutors</a>
+        <a href="TutorSearch.jsp"><i class="fas fa-search"></i> Find Tutors</a>
         <a href="#"><i class="fas fa-envelope"></i> Messages</a>
     </div>
     <div class="auth-buttons">

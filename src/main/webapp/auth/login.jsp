@@ -232,7 +232,7 @@
     <div class="nav-links">
         <a href="${pageContext.request.contextPath}/user/HomePage.jsp">Home</a>
         <a href="${pageContext.request.contextPath}/blog">Blog</a>
-        <a href="${pageContext.request.contextPath}/tutors">Find Tutors</a>
+        <a href="${pageContext.request.contextPath}/user/TutorSearch.jsp">Find Tutors</a>
         <a href="${pageContext.request.contextPath}/user/AboutUs.jsp">About Us</a>
     </div>
 </div>
