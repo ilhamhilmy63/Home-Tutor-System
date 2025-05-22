@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleRepository {
-    private static final String FILE_PATH = "C:/Users/Amri/Desktop/Testing000/Final_Test/HomeTutor/target/HomeTutor-1.0-SNAPSHOT/WEB-INF/data/schedules.txt";
+    private static final String FILE_PATH = "C:/Users/share/Desktop/HomeTutor/src/main/webapp/WEB-INF/data/schedules.txt";
 
     public void saveSchedule(Schedule schedule) throws IOException {
         ensureFileExists();

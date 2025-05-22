@@ -17,7 +17,7 @@ import java.util.Map;
 
 @WebServlet("/tutor-booking-details")
 public class TutorBookingDetailsServlet extends HttpServlet {
-    private static final String BOOKINGS_FILE_PATH = "C:/Users/Amri/Desktop/Testing000/Final_Test/HomeTutor/target/HomeTutor-1.0-SNAPSHOT/WEB-INF/data/bookings.txt";
+    private static final String BOOKINGS_FILE_PATH = "C:/Users/share/Desktop/HomeTutor/src/main/webapp/WEB-INF/data/bookings.txt";
     private final UserRepository userRepository = new UserRepository();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
