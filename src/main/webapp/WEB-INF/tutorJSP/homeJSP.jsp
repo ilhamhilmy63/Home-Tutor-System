@@ -125,6 +125,8 @@
         <a href="register">User Register</a> |
         <a href="tutor-login">Tutor Login</a> |
         <a href="tutor-register">Tutor Register</a>
+        <a href="tutor-booking-details">Booking Details</a>
+        <a href="tutor-update-profile">Update Profile</a>
     </div>
     <p>Find the best tutors for your learning needs!</p>
 </main>

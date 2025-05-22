@@ -49,6 +49,6 @@
     <% } %><br><br>
     <input type="submit" value="Update Profile">
 </form>
-<a href="tutor-home">Back to Dashboard</a>
+<a href="index.jsp">Back to Dashboard</a>
 </body>
 </html>

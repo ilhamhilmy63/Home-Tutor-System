@@ -17,6 +17,6 @@
 <p><strong>Time Slot:</strong> <%= details.get("timeSlot") %></p>
 <p><strong>Status:</strong> <%= details.get("status") %></p>
 <% } %>
-<a href="tutor-home">Back to Dashboard</a>
+<a href="index.jsp">Back to Dashboard</a>
 </body>
 </html>
