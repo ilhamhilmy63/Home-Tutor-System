@@ -4,7 +4,13 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/auth/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/auth" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/auth/register.jsp" value="file://$PROJECT_DIR$/src/main/webapp/auth" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/error/500.jsp" value="file://$PROJECT_DIR$/src/main/webapp/error" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/navbar.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/user/Contact.jsp" value="file://$PROJECT_DIR$/src/main/webapp/user" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/user/HomePage.jsp" value="file://$PROJECT_DIR$/src/main/webapp/user" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/user/contact-processing.jsp" value="file://$PROJECT_DIR$/src/main/webapp/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/user/dashboard.jsp" value="file://$PROJECT_DIR$/src/main/webapp/user" />
       </map>
     </option>

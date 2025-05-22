@@ -4,27 +4,16 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-    <display-name>Home Tutor System</display-name>
-
-    <!-- Session timeout configuration -->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
 
-    <!-- Welcome file list -->
     <welcome-file-list>
-        <welcome-file>auth/login.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Error pages -->
     <error-page>
         <error-code>404</error-code>
-        <location>/error/404.jsp</location>
+        <location>/error.jsp</location>
     </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error/500.jsp</location>
-    </error-page>
-
-    <!-- Servlets are configured via annotations (@WebServlet) -->
 </web-app>

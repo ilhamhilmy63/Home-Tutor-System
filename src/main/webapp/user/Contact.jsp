@@ -331,7 +331,7 @@
     <div class="container">
         <nav class="navbar">
             <div class="logo">
-                <img src="images/logo.png" alt="HomeTutor.lk">
+                <img src="images/logo.png" alt="HomeTutor.com">
                 <h1>HomeTutor.lk</h1>
             </div>
             <ul class="nav-links">
@@ -339,7 +339,7 @@
                 <li><a href="AboutUs.jsp">About Us</a></li>
                 <li><a href="tutors.jsp">Find Tutors</a></li>
                 <li><a href="Contact.jsp">Contact</a></li>
-                <li><a href="profile.jsp" class="btn">Login</a></li>
+                <li><a href="${pageContext.request.contextPath}/auth/login.jsp" class="btn">Login</a></li>
             </ul>
         </nav>
     </div>
@@ -383,8 +383,8 @@
                     </div>
                     <div class="info-text">
                         <h4>Email Us</h4>
-                        <p><a href="mailto:info@hometutor.lk">info@hometutor.lk</a></p>
-                        <p><a href="mailto:support@hometutor.lk">support@hometutor.lk</a></p>
+                        <p><a href="mailto:info@hometutor.lk">info@hometutor.com</a></p>
+                        <p><a href="mailto:support@hometutor.lk">support@hometutor.com</a></p>
                     </div>
                 </div>
                 <div class="info-box">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - HomeTutor.lk</title>
+    <title>About Us - HomeTutor.com</title>
     <style>
         :root {
             --primary-blue: #1a73e8;
@@ -310,15 +310,14 @@
     <div class="container">
         <nav class="navbar">
             <div class="logo">
-                <img src="images/logo.png" alt="HomeTutor.lk">
-                <h1>HomeTutor.lk</h1>
+                <img src="images/logo.png" alt="HomeTutor.com">
+                <h1>HomeTutor.com</h1>
             </div>
             <ul class="nav-links">
                 <li><a href="HomePage.jsp">Home</a></li>
-                <li><a href="AboutUs.jsp">About Us</a></li>
                 <li><a href="tutors.jsp">Find Tutors</a></li>
                 <li><a href="Contact.jsp">Contact</a></li>
-                <li><a href="profile.jsp" class="btn">Login</a></li>
+                <li><a href="${pageContext.request.contextPath}/auth/login.jsp" class="btn">Login</a></li>
             </ul>
         </nav>
     </div>
@@ -326,7 +325,7 @@
 
 <section class="hero">
     <div class="container">
-        <h2>About HomeTutor.lk</h2>
+        <h2>About HomeTutor.com</h2>
         <p>Connecting students with qualified home tutors across Sri Lanka to provide personalized education at your doorstep.</p>
     </div>
 </section>
@@ -337,7 +336,7 @@
         <div class="about-content">
             <div class="about-text">
                 <h3>Bridging the Education Gap</h3>
-                <p>Founded in 2023, HomeTutor.lk was born out of a simple idea: to make quality education accessible to every student in Sri Lanka. We recognized the challenges parents face in finding reliable, qualified tutors who can provide personalized attention to their children.</p>
+                <p>Founded in 2023, HomeTutor.com was born out of a simple idea: to make quality education accessible to every student in Sri Lanka. We recognized the challenges parents face in finding reliable, qualified tutors who can provide personalized attention to their children.</p>
                 <p>Our platform brings together certified educators and students in a secure, transparent environment. Whether you need help with school subjects, exam preparation, or special skills development, we connect you with the perfect tutor for your needs.</p>
                 <p>With over 5,000 registered tutors and 20,000 successful sessions, we're proud to be Sri Lanka's fastest growing home tuition platform.</p>
             </div>
@@ -350,7 +349,7 @@
 
 <section class="features">
     <div class="container">
-        <h2 class="section-title">Why Choose HomeTutor.lk</h2>
+        <h2 class="section-title">Why Choose HomeTutor.com</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
@@ -430,7 +429,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-column">
-                <h3>HomeTutor.lk</h3>
+                <h3>HomeTutor.com</h3>
                 <p>Your trusted partner for quality home education across Sri Lanka.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -463,12 +462,12 @@
                 <ul>
                     <li><i class="fas fa-map-marker-alt"></i> 123 Education St, Colombo</li>
                     <li><i class="fas fa-phone"></i> +94 11 234 5678</li>
-                    <li><i class="fas fa-envelope"></i> info@hometutor.lk</li>
+                    <li><i class="fas fa-envelope"></i> info@hometutor.com</li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2023 HomeTutor.lk. All Rights Reserved.</p>
+            <p>&copy; 2023 HomeTutor.com. All Rights Reserved.</p>
         </div>
     </div>
 </footer>

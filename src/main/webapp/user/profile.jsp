@@ -1,137 +1,126 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="lk.hometutor.User" %>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - HomeTutor.lk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Profile - hometutor.lk</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
-        .login-container {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        .logo-text {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        .tagline {
-            font-size: 16px;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
-        .form-control {
-            height: 45px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .btn-login {
-            background-color: #3498db;
+        .header {
+            background-color: #1a73e8;
             color: white;
-            border: none;
-            height: 45px;
-            border-radius: 5px;
-            font-weight: 500;
-            width: 100%;
-        }
-        .btn-login:hover {
-            background-color: #2980b9;
-        }
-        .remember-me {
-            margin-bottom: 15px;
-        }
-        .forgot-password {
-            text-align: right;
-            margin-bottom: 20px;
-        }
-        .forgot-password a {
-            color: #7f8c8d;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .forgot-password a:hover {
-            color: #3498db;
-        }
-        .signup-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #7f8c8d;
-        }
-        .signup-link a {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .nav-links {
+            padding: 20px;
             display: flex;
-            justify-content: center;
-            margin-top: 30px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logout-btn {
+            background-color: white;
+            color: #1a73e8;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 24px;
+        }
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        .nav-links a {
-            color: #7f8c8d;
-            text-decoration: none;
+        .info-item {
+            margin-bottom: 16px;
         }
-        .nav-links a:hover {
-            color: #3498db;
+        .info-label {
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .info-value {
+            font-size: 18px;
+        }
+        .edit-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .edit-btn:hover {
+            background-color: #0d62c9;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="login-container">
-        <div class="text-center mb-4">
-            <div class="logo-text">HomeTutor.lk</div>
-            <div class="tagline">Find the perfect tutor for your needs</div>
-        </div>
-
-        <c:if test="${not empty param.error}">
-            <div class="alert alert-danger">${param.error}</div>
-        </c:if>
-
-        <form action="${pageContext.request.contextPath}/login" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" id="email" name="email" placeholder="Username or Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="form-group form-check remember-me">
-                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                    <label class="form-check-label" for="remember">Remember me</label>
-                </div>
-                <div class="forgot-password">
-                    <a href="${pageContext.request.contextPath}/auth/forgot-password.jsp">Forgot password?</a>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-login">Login</button>
-        </form>
-
-        <div class="signup-link">
-            Don't have an account? <a href="${pageContext.request.contextPath}/auth/register.jsp">Sign Up</a>
-        </div>
-
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Blog</a>
-            <a href="#">Find Tutors</a>
-            <a href="#">About Us</a>
-        </div>
-    </div>
+<div class="header">
+    <div class="logo">hometutor.lk</div>
+    <form action="logout" method="post">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container">
+    <h1>Student Profile</h1>
+
+    <div class="profile-info">
+        <div class="info-item">
+            <div class="info-label">Full Name</div>
+            <div class="info-value"><%= user.getName() %></div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Email</div>
+            <div class="info-value"><%= user.getEmail() %></div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Phone Number</div>
+            <div class="info-value"><%= user.getPhone() %></div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Grade</div>
+            <div class="info-value"><%= user.getGrade() %></div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">Module Needed</div>
+            <div class="info-value"><%= user.getModule() %></div>
+        </div>
+    </div>
+
+    <button class="edit-btn" onclick="window.location.href='edit-profile.jsp'">Edit Profile</button>
+</div>
 </body>
 </html>
