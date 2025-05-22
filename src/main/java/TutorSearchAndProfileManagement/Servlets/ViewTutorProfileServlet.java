@@ -19,11 +19,11 @@ public class ViewTutorProfileServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        Tutor tutor = (Tutor) session.getAttribute("tutor");
         String tutorId = request.getParameter("id");
         boolean editMode = "true".equals(request.getParameter("edit"));
 
-        // If tutor not in session but ID provided, load from data store
+        // Get tutor from session or data store
+        Tutor tutor = (Tutor) session.getAttribute("tutor");
         if (tutor == null && tutorId != null) {
             tutor = TutorDataStore.findTutorById(tutorId);
             if (tutor != null) {
@@ -48,7 +48,20 @@ public class ViewTutorProfileServlet extends HttpServlet {
         request.setAttribute("tutor", tutor);
         request.setAttribute("availabilityList", availabilityList);
 
-        // Determine which page to show based on edit mode
+        // Check for confirmation/error messages from session
+        String confirmation = (String) session.getAttribute("confirmation");
+        String error = (String) session.getAttribute("error");
+
+        if (confirmation != null) {
+            request.setAttribute("confirmation", confirmation);
+            session.removeAttribute("confirmation");
+        }
+        if (error != null) {
+            request.setAttribute("error", error);
+            session.removeAttribute("error");
+        }
+
+        // Determine which page to show
         if (editMode && tutor.getId().equals(tutorId)) {
             request.getRequestDispatcher("/Tutors/EditTutorProfile.jsp").forward(request, response);
         } else {
