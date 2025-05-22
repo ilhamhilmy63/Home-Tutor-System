@@ -5,5 +5,6 @@
 </head>
 <body>
 Redirecting to login page...
+-<p><a href="TutorProfile.jsp">Tutor Profile page</a></p>
 </body>
 </html>

@@ -85,7 +85,8 @@ public class TutorRegisterServlet extends HttpServlet {
             // Set success message and redirect to TutorLogin.jsp
             request.getSession().setAttribute("message", "Tutor registration completed successfully. Please log in.");
             response.sendRedirect(request.getContextPath() + "/Tutors/TutorLogin.jsp");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             request.setAttribute("error", "Error: " + e.getMessage());
             request.getRequestDispatcher("/Tutors/TutorRegister.jsp").forward(request, response);
         }

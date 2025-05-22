@@ -2,181 +2,180 @@ package TutorSearchAndProfileManagement;
 
 import java.io.*;
 import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TutorDataStore {
+    private static final String FILE_PATH = "C:\\Users\\Shaa\\OneDrive\\Desktop\\Sem 02\\OOP\\Project\\Home Tutor System\\data\\Tutor.Data.txt";
 
-    public static class BSTNode {
-        Tutor data;
-        BSTNode left, right;
-
-        public BSTNode(Tutor data) {
-            this.data = data;
-            this.left = this.right = null;
-        }
-    }
-    private static final String FILE_PATH = "tutors.txt";
-    private static BSTNode root = null;
-
-    // Load all tutors from file into BST
-    static {
-        List<Tutor> tutors = readTutorsFromFile();
-        for (Tutor tutor : tutors) {
-            insertTutor(tutor);
-        }
-    }
-
-    private static List<Tutor> readTutorsFromFile() {
-        List<Tutor> tutors = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 7) continue;
-
-                String id = parts[0];
-                String name = parts[1];
-                String email = parts[2];
-                String password = parts[3];
-                String subject = parts[4];
-                String location = parts[5];
-                String bio = parts[6];
-
-                Map<String, String> availability = new HashMap<>();
-                if (parts.length > 7) {
-                    String[] slots = parts[7].split("\\|");
-                    for (String slot : slots) {
-                        String[] pair = slot.split(":");
-                        if (pair.length == 2) {
-                            availability.put(pair[0], pair[1]);
-                        }
-                    }
-                }
-
-                Tutor tutor = new Tutor(id, name, email, password, subject, location, bio, availability);
-                tutors.add(tutor);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return tutors;
-    }
-
-    // Insert into BST
-    public static void insertTutor(Tutor tutor) {
-        root = insertRecursive(root, tutor);
-    }
-
-    private static BSTNode insertRecursive(BSTNode node, Tutor tutor) {
-        if (node == null) return new BSTNode(tutor);
-
-        if (tutor.getName().compareToIgnoreCase(node.data.getName()) < 0) {
-            node.left = insertRecursive(node.left, tutor);
-        } else {
-            node.right = insertRecursive(node.right, tutor);
-        }
-        return node;
-    }
-
-    // Save to file and BST
-    public static void saveTutor(Tutor tutor) {
-        insertTutor(tutor);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            StringBuilder availabilityStr = new StringBuilder();
-            for (Map.Entry<String, String> entry : tutor.getAvailability().entrySet()) {
-                if (availabilityStr.length() > 0) availabilityStr.append("|");
-                availabilityStr.append(entry.getKey()).append(":").append(entry.getValue());
-            }
-
-            String record = String.join(",", tutor.getId(), tutor.getName(), tutor.getEmail(),
-                    tutor.getPassword(), tutor.getSubject(), tutor.getLocation(), tutor.getBio(), availabilityStr.toString());
-
-            bw.write(record);
-            bw.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Get all tutors (in-order traversal)
     public static List<Tutor> getAllTutors() {
         List<Tutor> tutors = new ArrayList<>();
-        inOrderTraversal(root, tutors);
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",", -1);
+                if (parts.length >= 9) { // Minimum required fields
+                    String id = parts[0].trim();
+                    String name = parts[1].trim();
+                    String email = parts[2].trim();
+                    String phone = parts[3].trim();
+                    String password = parts[4].trim();
+                    String subject = parts[5].trim();
+                    String location = parts[6].trim();
+                    String bio = parts[7].trim();
+                    String expertise = parts[8].trim();
+                    String availabilityStr = parts.length > 9 ? parts[9].trim() : "";
+                    Tutor tutor = new Tutor(id, name, email, phone, password, subject, location, bio, expertise, availabilityStr);
+                    tutors.add(tutor);
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         return tutors;
     }
 
-    private static void inOrderTraversal(BSTNode node, List<Tutor> tutors) {
-        if (node != null) {
-            inOrderTraversal(node.left, tutors);
-            tutors.add(node.data);
-            inOrderTraversal(node.right, tutors);
-        }
-    }
-
-    // Find tutor by name
-    public static Tutor findTutorByName(String name) {
-        return searchByName(root, name);
-    }
-
-    private static Tutor searchByName(BSTNode node, String name) {
-        if (node == null) return null;
-
-        int cmp = name.compareToIgnoreCase(node.data.getName());
-        if (cmp == 0) return node.data;
-        else if (cmp < 0) return searchByName(node.left, name);
-        else return searchByName(node.right, name);
-    }
-
-    // Delete tutor by ID from BST and update the file
-    public static void deleteTutor(String id) {
-        root = deleteRecursive(root, id);
-        // Re-write all tutors to file
-        List<Tutor> updatedTutors = new ArrayList<>();
-        inOrderTraversal(root, updatedTutors);
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (Tutor tutor : updatedTutors) {
-                StringBuilder availabilityStr = new StringBuilder();
-                for (Map.Entry<String, String> entry : tutor.getAvailability().entrySet()) {
-                    if (availabilityStr.length() > 0) availabilityStr.append("|");
-                    availabilityStr.append(entry.getKey()).append(":").append(entry.getValue());
+    public static Tutor findTutorByEmailAndPassword(String email, String password) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",", -1);
+                if (parts.length >= 9) {
+                    String tutorEmail = parts[2].trim();
+                    String tutorPassword = parts[4].trim();
+                    if (tutorEmail.equals(email) && tutorPassword.equals(password)) {
+                        String id = parts[0].trim();
+                        String name = parts[1].trim();
+                        String phone = parts[3].trim();
+                        String subject = parts[5].trim();
+                        String location = parts[6].trim();
+                        String bio = parts[7].trim();
+                        String expertise = parts[8].trim();
+                        String availabilityStr = parts.length > 9 ? parts[9].trim() : "";
+                        return new Tutor(id, name, tutorEmail, phone, tutorPassword, subject, location, bio, expertise, availabilityStr);
+                    }
                 }
-
-                String record = String.join(",", tutor.getId(), tutor.getName(), tutor.getEmail(),
-                        tutor.getPassword(), tutor.getSubject(), tutor.getLocation(), tutor.getBio(), availabilityStr.toString());
-
-                bw.write(record);
-                bw.newLine();
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // no matching tutor found
+    }
+
+    public static Tutor findTutorById(String id) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",", -1);
+                if (parts.length >= 9 && parts[0].trim().equals(id)) {
+                    String tutorId = parts[0].trim();
+                    String name = parts[1].trim();
+                    String email = parts[2].trim();
+                    String phone = parts[3].trim();
+                    String password = parts[4].trim();
+                    String subject = parts[5].trim();
+                    String location = parts[6].trim();
+                    String bio = parts[7].trim();
+                    String expertise = parts[8].trim();
+                    String availabilityStr = parts.length > 9 ? parts[9].trim() : "";
+                    return new Tutor(tutorId, name, email, phone, password, subject, location, bio, expertise, availabilityStr);
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void saveTutor(Tutor tutor) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                    tutor.getId(), tutor.getName(), tutor.getEmail(), tutor.getPhone(),
+                    tutor.getPassword(), tutor.getSubject(), tutor.getLocation(),
+                    tutor.getBio(), tutor.getExpertise(), tutor.getAvailabilityAsString());
+            writer.write(line);
+            writer.newLine();
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static BSTNode deleteRecursive(BSTNode node, String id) {
-        if (node == null) return null;
+    public static boolean updateTutor(Tutor updatedTutor) {
+        List<Tutor> tutors = getAllTutors();
+        boolean found = false;
 
-        int cmp = id.compareTo(node.data.getId());
-        if (cmp < 0) {
-            node.left = deleteRecursive(node.left, id);
-        } else if (cmp > 0) {
-            node.right = deleteRecursive(node.right, id);
-        } else {
-            // Node to delete found
-            if (node.left == null) return node.right;
-            else if (node.right == null) return node.left;
-
-            // Two children: get inorder successor
-            BSTNode minLargerNode = getMin(node.right);
-            node.data = minLargerNode.data;
-            node.right = deleteRecursive(node.right, minLargerNode.data.getId());
+        // Find and update the tutor
+        for (int i = 0; i < tutors.size(); i++) {
+            if (tutors.get(i).getId().equals(updatedTutor.getId())) {
+                tutors.set(i, updatedTutor);
+                found = true;
+                break;
+            }
         }
-        return node;
+
+        if (found) {
+            Path originalPath = Paths.get(FILE_PATH);
+            Path backupPath = Paths.get(FILE_PATH + ".bak");
+
+            try {
+                // Create backup
+                if (Files.exists(originalPath)) {
+                    Files.copy(originalPath, backupPath, StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                // Write updated data
+                try (BufferedWriter writer = Files.newBufferedWriter(originalPath)) {
+                    for (Tutor tutor : tutors) {
+                        String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                                tutor.getId(), tutor.getName(), tutor.getEmail(), tutor.getPhone(),
+                                tutor.getPassword(), tutor.getSubject(), tutor.getLocation(),
+                                tutor.getBio(), tutor.getExpertise(), tutor.getAvailabilityAsString());
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                    return true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Restore from backup if update failed
+                try {
+                    if (Files.exists(backupPath)) {
+                        Files.copy(backupPath, originalPath, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return false;
+            }
+        }
+        return false;
     }
 
-    private static BSTNode getMin(BSTNode node) {
-        while (node.left != null) {
-            node = node.left;
+    public static boolean deleteTutor(String id) {
+        List<Tutor> tutors = getAllTutors();
+        boolean found = tutors.removeIf(tutor -> tutor.getId().equals(id));
+        if (found) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+                for (Tutor tutor : tutors) {
+                    String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                            tutor.getId(), tutor.getName(), tutor.getEmail(), tutor.getPhone(),
+                            tutor.getPassword(), tutor.getSubject(), tutor.getLocation(),
+                            tutor.getBio(), tutor.getExpertise(), tutor.getAvailabilityAsString());
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
-        return node;
+        return found;
     }
 }

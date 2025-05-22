@@ -4,6 +4,8 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Tutors/EditTutorProfile.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Tutors" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Tutors/TutorLogin.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Tutors" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Tutors/TutorRegister.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Tutors" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/auth/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/auth" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/user/Contact.jsp" value="file://$PROJECT_DIR$/src/main/webapp/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/user/TutorProfile.jsp" value="file://$PROJECT_DIR$/src/main/webapp/user" />

@@ -4,19 +4,18 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
-import TutorSearchAndProfileManagement.Tutor;
 import TutorSearchAndProfileManagement.TutorDataStore;
 
-@WebServlet("/TutorList")
-public class TutorListServlet extends HttpServlet {
+@WebServlet("/DeleteTutor")
+public class DeleteTutorServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Tutor> tutorList = TutorDataStore.getAllTutors();
+        String tutorId = request.getParameter("id");
+        TutorDataStore.deleteTutor(tutorId);
 
-        request.setAttribute("tutorList", tutorList);
-        request.getRequestDispatcher("tutor-list.jsp").forward(request, response);
+        request.setAttribute("message", "Tutor deleted successfully.");
+        request.getRequestDispatcher("tutorList").forward(request, response);
     }
 }
