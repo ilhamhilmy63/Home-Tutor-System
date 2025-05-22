@@ -331,7 +331,7 @@
     <div class="container">
         <nav class="navbar">
             <div class="logo">
-                <img src="images/logo.png" alt="HomeTutor.com">
+                <img src="images/logo.png" alt="HomeTutor.lk">
                 <h1>HomeTutor.lk</h1>
             </div>
             <ul class="nav-links">

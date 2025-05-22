@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="lk.hometutor.User" %>
+<%@ page import="com.example.model.*" %>
 <%
-    User user = (User) session.getAttribute("user");
+    Student user = (Student) session.getAttribute("user");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
@@ -96,7 +96,7 @@
     <div class="profile-info">
         <div class="info-item">
             <div class="info-label">Full Name</div>
-            <div class="info-value"><%= user.getName() %></div>
+            <div class="info-value"><%= user.getFullName() %></div>
         </div>
 
         <div class="info-item">
@@ -106,7 +106,7 @@
 
         <div class="info-item">
             <div class="info-label">Phone Number</div>
-            <div class="info-value"><%= user.getPhone() %></div>
+            <div class="info-value"><%= user.getPhoneNumber() %></div>
         </div>
 
         <div class="info-item">
