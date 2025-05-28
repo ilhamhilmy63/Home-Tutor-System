@@ -68,10 +68,11 @@ public class AdminRepository {
         saveAllAdmins(admins);
     }
 
-    public void deleteAdmin(String adminId) throws IOException {
+    public boolean deleteAdmin(String adminId) throws IOException {
         List<Admin> admins = getAllAdmins();
         admins.removeIf(admin -> admin.getId().equals(adminId));
         saveAllAdmins(admins);
+        return false;
     }
 
     private void saveAllAdmins(List<Admin> admins) throws IOException {

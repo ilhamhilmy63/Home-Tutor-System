@@ -2,6 +2,7 @@ package com.example.servlets;
 
 import com.example.model.Admin;
 import com.example.model.Student;
+import com.example.model.Tutor;
 import com.example.modules.AdminManagement.AdminService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,13 +32,17 @@ public class AdminDashboardServlet extends HttpServlet {
         }
 
         try {
-            // Get all students for dashboard
+            // Get all students and tutors for dashboard
             List<Student> students = adminService.getAllStudents();
+            List<Tutor> tutors = adminService.getAllTutors();
             long totalStudents = adminService.getTotalStudentCount();
+            long totalTutors = adminService.getTotalTutorCount();
 
             // Set attributes for JSP
             request.setAttribute("students", students);
+            request.setAttribute("tutors", tutors);
             request.setAttribute("totalStudents", totalStudents);
+            request.setAttribute("totalTutors", totalTutors);
             request.setAttribute("admin", admin);
 
             // Forward to dashboard JSP
@@ -72,6 +77,15 @@ public class AdminDashboardServlet extends HttpServlet {
                     request.setAttribute("success", "Student deleted successfully!");
                 } else {
                     request.setAttribute("error", "Failed to delete student.");
+                }
+            } else if ("deleteTutor".equals(action)) {
+                String tutorId = request.getParameter("tutorId");
+                boolean deleted = adminService.deleteTutor(tutorId);
+
+                if (deleted) {
+                    request.setAttribute("success", "Tutor deleted successfully!");
+                } else {
+                    request.setAttribute("error", "Failed to delete tutor.");
                 }
             }
 

@@ -255,7 +255,7 @@
                     <p class="quick-action-desc">Schedule a tutoring session with your preferred tutor</p>
                 </a>
 
-                <a href="tutor.jsp" class="quick-action-card text-decoration-none">
+                <a href="tutor-search" class="quick-action-card text-decoration-none">
                     <div class="quick-action-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
@@ -271,7 +271,7 @@
                     <p class="quick-action-desc">Edit your personal information</p>
                 </div>
 
-                <a href="courses.jsp" class="quick-action-card text-decoration-none">
+                <a href="${pageContext.request.contextPath}/user/MyCourse.jsp" class="quick-action-card text-decoration-none">
                     <div class="quick-action-icon">
                         <i class="fas fa-book-open"></i>
                     </div>

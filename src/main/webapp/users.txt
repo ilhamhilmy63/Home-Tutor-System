@@ -1,5 +1,4 @@
-5c4243b6-b26c-4fe2-92b6-5954fbc0c36e,Ilham Hilmy,0740524646,ilhamhilmy434@gmail.com,Ilham*1212,Grade 13,Mathematics
-61934c11-c61e-4da2-90bb-4493e61fd57b,Rizquan,0767279911,mohaamedrizquan12@gmail.com,Ilham*2424,Grade 10,Art
 c9539901-f9fc-41cb-96aa-f784995479db,Raashidh,0711234564,raashidhrizvi12@gmail.com,rizvi*1212,Grade 10,English
 4f09cf91-926a-416c-a8d9-855c265b4458,Azlif,0778306521,azlifIfham23@gmail.com,Azlif*1212,Grade 12,Chemistry
 6a8fda1f-3fa4-4900-b221-d49206344aa1,Shaahidh,0771451428,shaa23@gmail.com,Shaa*1212,Grade 11,Physics
+92431797-72cb-44f0-a3f5-5573e8c468b4,Wazni,0765236781,wazni12@gmail.com,wazni*1212,Grade 5,Physical
