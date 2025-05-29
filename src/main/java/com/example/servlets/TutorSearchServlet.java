@@ -97,13 +97,13 @@ public class TutorSearchServlet extends HttpServlet {
         if ("subject".equals(quickSearchType)) {
             // Redirect to GET with subject filter
             response.sendRedirect(request.getContextPath() + "/tutor-search?specialization=" +
-                    (searchQuery != null ? searchQuery : "") + "&sortBy=subject");
+                    (searchQuery != null ? searchQuery : "") + "&sortBy=subject_expertise");
         } else if ("recommended".equals(quickSearchType)) {
             // Show recommended tutors based on student's module
             Student student = (Student) session.getAttribute("student");
             String studentModule = student != null ? student.getModule() : "";
             response.sendRedirect(request.getContextPath() + "/tutor-search?specialization=" +
-                    studentModule + "&sortBy=experience");
+                    studentModule + "&sortBy=subject_expertise");
         } else {
             // Default search
             response.sendRedirect(request.getContextPath() + "/tutor-search");

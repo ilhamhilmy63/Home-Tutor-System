@@ -59,7 +59,8 @@ public class TutorService {
                     TutorSort.sortTutorsByExperience(tutors);
                     break;
                 case "subject":
-                    TutorSort.sortTutorsBySpecialization(tutors);
+                case "subject_expertise":
+                    TutorSort.sortTutorsBySubjectExpertise(tutors);
                     break;
                 default:
                     // Default sorting by name

@@ -82,6 +82,24 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
+        .tutor-card.recommended {
+            border: 2px solid var(--accent-color);
+            position: relative;
+        }
+
+        .tutor-card.recommended::before {
+            content: "Recommended for You";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
         .tutor-avatar {
             width: 80px;
             height: 80px;
@@ -140,6 +158,11 @@
             color: white;
         }
 
+        .alert-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
         .quick-filters {
             background: white;
             border-radius: 10px;
@@ -179,6 +202,14 @@
             color: #cbd5e1;
         }
 
+        .personalized-header {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #20c997 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) {
             .tutor-card .d-flex {
                 flex-direction: column;
@@ -211,19 +242,38 @@
 </div>
 
 <div class="container">
-    <!-- Quick Search Form (from Dashboard) -->
+    <!-- Personalized Recommendations Header -->
+    <c:if test="${not empty student and not empty student.module}">
+        <div class="personalized-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h5 class="mb-1"><i class="fas fa-star me-2"></i>Personalized for Your Studies</h5>
+                    <p class="mb-0">We're prioritizing tutors who specialize in <strong>${student.module}</strong> - your current module</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="${pageContext.request.contextPath}/tutor-search?specialization=${student.module}&sortBy=subject_expertise"
+                       class="btn btn-light btn-sm">
+                        <i class="fas fa-bolt me-1"></i>Find ${student.module} Tutors
+                    </a>
+                </div>
+            </div>
+        </div>
+    </c:if>
+
+    <!-- Quick Search Form (POST request) -->
     <div class="search-form">
+        <h4 class="mb-4"><i class="fas fa-rocket me-2"></i>Quick Search</h4>
         <form method="post" action="${pageContext.request.contextPath}/tutor-search">
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <label class="form-label fw-bold">Quick Search</label>
+                    <label class="form-label fw-bold">Search Type</label>
                     <select name="quickSearchType" class="form-select">
                         <option value="subject">Search by Subject</option>
                         <option value="recommended">Recommended for Me</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Search Query</label>
+                    <label class="form-label fw-bold">Search Query (Optional)</label>
                     <input type="text" name="searchQuery" class="form-control"
                            placeholder="Enter subject or leave empty for all recommendations">
                 </div>
@@ -236,7 +286,7 @@
         </form>
     </div>
 
-    <!-- Advanced Search Form -->
+    <!-- Advanced Search Form (GET request) -->
     <div class="search-form">
         <h4 class="mb-4"><i class="fas fa-filter me-2"></i>Advanced Search Filters</h4>
         <form method="get" action="${pageContext.request.contextPath}/tutor-search">
@@ -263,6 +313,7 @@
                         <option value="rate_high" ${selectedSortBy eq 'rate_high' ? 'selected' : ''}>Rate (High to Low)</option>
                         <option value="experience" ${selectedSortBy eq 'experience' ? 'selected' : ''}>Experience</option>
                         <option value="subject" ${selectedSortBy eq 'subject' ? 'selected' : ''}>Subject</option>
+                        <option value="subject_expertise" ${selectedSortBy eq 'subject_expertise' ? 'selected' : ''}>Subject Expertise</option>
                     </select>
                 </div>
             </div>
@@ -300,8 +351,8 @@
     <div class="quick-filters">
         <h6 class="mb-2">Popular Searches:</h6>
         <c:if test="${not empty student and not empty student.module}">
-            <a href="${pageContext.request.contextPath}/tutor-search?specialization=${student.module}&sortBy=experience"
-               class="filter-chip ${selectedSpecialization eq student.module ? 'active' : ''}">
+            <a href="${pageContext.request.contextPath}/tutor-search?specialization=${student.module}&sortBy=subject_expertise"
+               class="filter-chip ${selectedSpecialization eq student.module and selectedSortBy eq 'subject_expertise' ? 'active' : ''}">
                 <i class="fas fa-star me-1"></i>My Subject (${student.module})
             </a>
         </c:if>
@@ -346,15 +397,19 @@
     <c:choose>
         <c:when test="${not empty tutors}">
             <div class="row">
-                <c:forEach var="tutor" items="${tutors}">
+                <c:forEach var="tutor" items="${tutors}" varStatus="status">
                     <div class="col-12">
-                        <div class="tutor-card">
+                        <div class="tutor-card ${not empty student and not empty student.module and tutor.specialization.equalsIgnoreCase(student.module) ? 'recommended' : ''}">
                             <div class="d-flex align-items-center">
                                 <div class="tutor-avatar">
                                         ${tutor.fullName.substring(0,1).toUpperCase()}
                                 </div>
                                 <div class="tutor-info flex-grow-1">
-                                    <h5>${tutor.fullName}</h5>
+                                    <h5>${tutor.fullName}
+                                        <c:if test="${not empty student and not empty student.module and tutor.specialization.equalsIgnoreCase(student.module)}">
+                                            <i class="fas fa-star text-warning ms-2" title="Matches your current module"></i>
+                                        </c:if>
+                                    </h5>
                                     <div class="tutor-specialization">${tutor.specialization}</div>
                                     <p class="tutor-experience mb-1">
                                         <i class="fas fa-graduation-cap me-1"></i>${tutor.qualification}
@@ -399,6 +454,18 @@
                 <i class="fas fa-search fa-4x text-muted mb-3"></i>
                 <h4 class="text-muted">Start your search</h4>
                 <p class="text-muted">Use the filters above to find the perfect tutor for your needs.</p>
+                <c:if test="${not empty student and not empty student.module}">
+                    <div class="mt-3">
+                        <a href="${pageContext.request.contextPath}/tutor-search?specialization=${student.module}&sortBy=subject_expertise"
+                           class="btn btn-primary me-2">
+                            <i class="fas fa-star me-1"></i>Find ${student.module} Tutors
+                        </a>
+                        <a href="${pageContext.request.contextPath}/tutor-search?sortBy=experience"
+                           class="btn btn-outline-primary">
+                            <i class="fas fa-medal me-1"></i>Browse All Tutors
+                        </a>
+                    </div>
+                </c:if>
             </div>
         </c:otherwise>
     </c:choose>
@@ -406,17 +473,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Form enhancement
     document.addEventListener('DOMContentLoaded', function() {
-        // Auto-submit on filter change for better UX
-        const filters = document.querySelectorAll('#specialization, #sortBy, #experienceLevel');
-        filters.forEach(filter => {
-            filter.addEventListener('change', function() {
-                // Optional: Auto-submit form on change
-                // this.form.submit();
-            });
-        });
-
         // Clear filters button
         const clearBtn = document.createElement('button');
         clearBtn.type = 'button';
@@ -426,10 +483,10 @@
             window.location.href = '${pageContext.request.contextPath}/tutor-search';
         };
 
-        // Add clear button to search form
-        const searchButton = document.querySelector('.btn-search');
-        if (searchButton && searchButton.parentNode) {
-            searchButton.parentNode.appendChild(clearBtn);
+        // Add clear button to advanced search form
+        const advancedSearchButton = document.querySelector('.search-form:nth-of-type(${not empty student and not empty student.module ? "3" : "2"}) .btn-search');
+        if (advancedSearchButton && advancedSearchButton.parentNode) {
+            advancedSearchButton.parentNode.appendChild(clearBtn);
         }
 
         // Rate range validation
@@ -458,50 +515,57 @@
             }, 300);
         }
 
-        // Loading state for search button
+        // Loading state for search buttons
         const searchForms = document.querySelectorAll('form');
         searchForms.forEach(form => {
             form.addEventListener('submit', function() {
                 const submitBtn = form.querySelector('button[type="submit"]');
                 if (submitBtn) {
+                    const originalText = submitBtn.innerHTML;
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Searching...';
+
+                    // Re-enable after a timeout in case of errors
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }, 10000);
                 }
             });
         });
+
+        // Quick search type change handler
+        const quickSearchType = document.querySelector('select[name="quickSearchType"]');
+        const searchQueryInput = document.querySelector('input[name="searchQuery"]');
+
+        if (quickSearchType && searchQueryInput) {
+            quickSearchType.addEventListener('change', function() {
+                if (this.value === 'recommended') {
+                    searchQueryInput.placeholder = 'Leave empty for all recommendations based on your module';
+                } else {
+                    searchQueryInput.placeholder = 'Enter subject or leave empty for all recommendations';
+                }
+            });
+        }
+
+        // Highlight recommended tutors
+        const recommendedCards = document.querySelectorAll('.tutor-card.recommended');
+        recommendedCards.forEach(card => {
+            // Add subtle animation to draw attention
+            card.style.animation = 'pulse 2s infinite';
+        });
+
+        // Add pulse animation for recommended cards
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+                50% { box-shadow: 0 8px 25px rgba(6, 214, 160, 0.2); }
+                100% { box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+            }
+        `;
+        document.head.appendChild(style);
     });
-
-    // Advanced search toggle
-    function toggleAdvancedSearch() {
-        const advancedForm = document.querySelector('.search-form:nth-of-type(2)');
-        if (advancedForm.style.display === 'none') {
-            advancedForm.style.display = 'block';
-            advancedForm.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            advancedForm.style.display = 'none';
-        }
-    }
-
-    // Favorite tutor functionality
-    function toggleFavorite(tutorId, element) {
-        const icon = element.querySelector('i');
-        const isFavorited = icon.classList.contains('fas');
-
-        // Toggle icon
-        if (isFavorited) {
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-            element.setAttribute('title', 'Add to favorites');
-        } else {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-            element.setAttribute('title', 'Remove from favorites');
-        }
-
-        // Here you would typically make an AJAX call to save the favorite status
-        // fetch('/api/favorites', { method: 'POST', body: JSON.stringify({tutorId, action: isFavorited ? 'remove' : 'add'}) });
-    }
 </script>
 </body>
 </html>
-

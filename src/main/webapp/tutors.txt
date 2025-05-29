@@ -1,0 +1,4 @@
+8cb097e5-9fcf-44ac-88a5-475429cec525,Ilham Hilmy,0740524646,ilhamhilmy434@gmail.com,Ilham*1212,BSc Information Technology,Computer Science,1-2 years,50.0
+97886a64-3fc1-49c4-9b5c-1e6fe725ed22,Nifran Nawas,0778291320,Nippu24@gmail.com,Nippu*1212,BSc (Hons) Accountancy and Taxation ,Other,5-10 years,5000.0
+ee24d634-fa58-4cd3-ba7e-f4efd7a23b40,Abdhullah Naseer,0718234561,naseer2@gmail.com,naseer*1212,BBM in Aviation Management,Physics,5-10 years,500.0
+d98844a3-a38f-42a2-8fae-33378b25b2a1,Yousoof Sally,0771231405,yousoof24@gmail.com,Yousoof*1212,BSc Natural Science ,Physics,More than 10 years,900.0
